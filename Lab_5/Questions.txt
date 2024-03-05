@@ -6,7 +6,7 @@
     scheduling algorithm to calculate average turn around time taken by the 
     person in the queue for booking process. Display the gant chart to represent 
     the order of the person in the queue and also waiting and turnaround time
-    for each process.
+    for each process. (FCFC)
 
 
 2. i. Consider an online delivery app, which delivers the product to the customer
@@ -14,10 +14,12 @@
       for deliver and then next customer. Suppose 2 customers are booking the product
       at the same time then the nearest customer will be chosen first.Consider the
       booking time as arrival time. Choose an appropriate scheduling algorithm to 
-      delivery the product in an efficient manner(bustime = distance)
+      delivery the product in an efficient manner(bustime = distance) (SJF)
+        
   ii. For the same app compute for the frequent customer will be given discount 
       and consider that the customer is chosen with discount code as highest 
-      protity(busttime = distance, priority = frequency)
+      protity(busttime = distance, priority = frequency) (Priority)
+
     Write a program in c to implement 2 scheduling algorithm for case i and ii.
     Display all results on screen.
 
@@ -29,4 +31,4 @@
     be given to next lane of the road. write a c program implement a scheduling 
     algorithm to illustrate how the vehicles crossed the junction with the minimum
     waiting time. Calculate average waiting time and average turnaround time, 
-    dislpay gant chart and all results on screen.(busttime = #vehicles)
+    dislpay gant chart and all results on screen.(busttime = #vehicles) (Round Robin)
