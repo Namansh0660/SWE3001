@@ -1,0 +1,32 @@
+1.  Consider  a ticket counter in  a railway station where the people wait
+    in a ques for booking  a ticket. The person who arrives first in the queue can
+    buy the ticket first and then nest and so onn...This continues until the queue
+    become empty,the order of arrival of the person in the queue qecides their 
+    chance to buy the ticket.Writer the program in C to implement approriate 
+    scheduling algorithm to calculate average turn around time taken by the 
+    person in the queue for booking process. Display the gant chart to represent 
+    the order of the person in the queue and also waiting and turnaround time
+    for each process.
+
+
+2. i. Consider an online delivery app, which delivers the product to the customer
+      who have booked online. The app always chooses the nearest customer first
+      for deliver and then next customer. Suppose 2 customers are booking the product
+      at the same time then the nearest customer will be chosen first.Consider the
+      booking time as arrival time. Choose an appropriate scheduling algorithm to 
+      delivery the product in an efficient manner(bustime = distance)
+  ii. For the same app compute for the frequent customer will be given discount 
+      and consider that the customer is chosen with discount code as highest 
+      protity(busttime = distance, priority = frequency)
+    Write a program in c to implement 2 scheduling algorithm for case i and ii.
+    Display all results on screen.
+
+3.  Consider a junction of road where 4 roads meet at this junction, every often
+    there is a problem of jamming of vehicles at this junction. To overcome this 
+    problem a traffic signal was planned to be installed at the signal. The 
+    operation of the signal is planned in such a way that, the vehicles in each lane
+    of the road will be allowed only for 3 minutes and then stopped. The chance will
+    be given to next lane of the road. write a c program implement a scheduling 
+    algorithm to illustrate how the vehicles crossed the junction with the minimum
+    waiting time. Calculate average waiting time and average turnaround time, 
+    dislpay gant chart and all results on screen.(busttime = #vehicles)
