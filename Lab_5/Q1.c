@@ -1,15 +1,3 @@
-/*
-1.  Consider  a ticket counter in  a railway station where the people wait
-    in a ques for booking  a ticket. The person who arrives first in the queue can
-    buy the ticket first and then nest and so onn...This continues until the queue
-    become empty,the order of arrival of the person in the queue qecides their 
-    chance to buy the ticket.Writer the program in C to implement approriate 
-    scheduling algorithm to calculate average turn around time taken by the 
-    person in the queue for booking process. Display the gant chart to represent 
-    the order of the person in the queue and also waiting and turnaround time
-    for each process. (FCFC)
-*/
-
 #include<stdio.h>
 
 void fcfs(int arrival_time[], int n, int booking_time[]) {
@@ -29,24 +17,29 @@ void fcfs(int arrival_time[], int n, int booking_time[]) {
         total_turnaround_time += turnaround_time[i];
     }
 
-    // Display Gantt chart and process details
+    // Display Gantt chart
     printf("\nGantt Chart:\n");
     printf("-----------\n");
-    printf("|\t");
+    printf("| ");
     for(int i = 0; i < n; i++) {
-        printf("P%d\t|", i+1);
+        printf(" P%d |", i+1);
     }
     printf("\n-----------\n");
     printf("0\t");
     for(int i = 0; i < n; i++) {
-        printf("%d\t", turnaround_time[i]);
+        printf("\t%d", turnaround_time[i]);
     }
     printf("\n\n");
 
-    printf("Process\t Arrival Time\t Booking Time\t Waiting Time\t Turnaround Time\n");
-    printf("-----------------------------------------------------------------------\n");
+    // Display waiting time and turnaround time for each person
+    printf("Waiting Time:\n");
     for(int i = 0; i < n; i++) {
-        printf("P%d\t\t%d\t\t%d\t\t%d\t\t%d\n", i+1, arrival_time[i], booking_time[i], waiting_time[i], turnaround_time[i]);
+        printf("P%d: %d\n", i+1, waiting_time[i]);
+    }
+
+    printf("\nTurnaround Time:\n");
+    for(int i = 0; i < n; i++) {
+        printf("P%d: %d\n", i+1, turnaround_time[i]);
     }
 
     // Calculate and display average turnaround time
