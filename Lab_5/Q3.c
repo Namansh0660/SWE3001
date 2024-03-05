@@ -1,3 +1,14 @@
+/*
+3.  Consider a junction of road where 4 roads meet at this junction, every often
+    there is a problem of jamming of vehicles at this junction. To overcome this 
+    problem a traffic signal was planned to be installed at the signal. The 
+    operation of the signal is planned in such a way that, the vehicles in each lane
+    of the road will be allowed only for 3 minutes and then stopped. The chance will
+    be given to next lane of the road. write a c program implement a scheduling 
+    algorithm to illustrate how the vehicles crossed the junction with the minimum
+    waiting time. Calculate average waiting time and average turnaround time, 
+    dislpay gant chart and all results on screen.(busttime = #vehicles) (Round Robin)
+    */
 #include <stdio.h>
 #include <stdlib.h>
 #define MAX 100
