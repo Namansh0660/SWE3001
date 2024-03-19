@@ -93,3 +93,60 @@ int main() {
 
     return 0;
 }
+
+
+
+
+#include <stdio.h>
+#define TimeQuantum 3
+#define VehicleCrossingRate 10
+
+int main() {
+    int road[4] = {0, 0, 0, 0};
+    int time = 0, turn = 0, totalVehicles = 0, btime = 0;
+    int wait[4] = {0}, tot[4] = {0};
+
+    // Input the number of vehicles for each road
+    for (int i = 0; i < 4; i++) {
+        printf("Enter number of vehicles in road %d: ", i);
+        scanf("%d", &road[i]);
+        totalVehicles += road[i];
+    }
+
+    printf("\nGantt Chart:\n");
+
+    // Simulate the traffic signal scheduling
+    while (totalVehicles > 0) {
+        printf("> Time %d\t Road %d\t Vehicles %d\n", time, turn, road[turn]);
+
+        if (road[turn] > 0) {
+            int crossing = (road[turn] >= VehicleCrossingRate) ? VehicleCrossingRate : road[turn];
+            road[turn] -= crossing;
+            totalVehicles -= crossing;
+
+            if (road[turn] <= 0) {
+                printf(">> Road %d is empty.\n", turn);
+            }
+
+            wait[turn] += time - tot[turn];
+            tot[turn] = time + 1;
+        }
+
+        time++;
+
+        if ((time % TimeQuantum == 0) || (road[turn] == 0)) {
+            do {
+                turn = (turn + 1) % 4;
+            } while ((road[turn] <= 0) && (totalVehicles > 0));
+        }
+    }
+
+    printf("\nAverage Waiting Time:\n");
+    for (int i = 0; i < 4; i++) {
+        printf("Road %d: %.2f minutes\n", i, (float) wait[i] / road[i]);
+    }
+
+    printf("\nAverage Turnaround Time: %.2f minutes\n", (float) (time - 1) / totalVehicles);
+
+    return 0;
+}
