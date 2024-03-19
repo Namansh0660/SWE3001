@@ -1,67 +1,82 @@
+/*
+1. Consider a ticket counter in a railway station where the people waits in a queue for booking the ticket. 
+   The person who arrives first in the queue can buy the ticket first and then the next person, this continues 
+   until the queue becomes empty.The order of arrival of a person in the queue decides their chance to buy the 
+   ticket.Write a program in C to implement an appropriate scheduling algorithm to calculate the average waiting 
+   time and average turn around time,taken by the person in the queue for the booking process. Display the ghant 
+   chart to represent the order of the person in the queue and also waiting time and turnaround time for each person.
+*/
+
+//First Come First Serve
+
 #include<stdio.h>
-
-void fcfs(int arrival_time[], int n, int booking_time[]) {
-    int waiting_time[n], turnaround_time[n];
-    int total_waiting_time = 0, total_turnaround_time = 0;
-
-    // Calculate waiting time for each person
-    waiting_time[0] = 0;
-    for(int i = 1; i < n; i++) {
-        waiting_time[i] = waiting_time[i-1] + booking_time[i-1] - arrival_time[i];
-        total_waiting_time += waiting_time[i];
+ 
+ int main()
+ 
+{
+    int n,bt[20],wt[20],tat[20],at[20],i,j;
+    float avwt = 0.0,avtat = 0.0;                             //bt = burst out time 
+    printf("Enter total number of people:");                 //wt = waiting time
+    scanf("%d",&n);                                          //tat = turn around time
+                                                             //avwt = average turn around time
+    printf("Enter Process Burst Time\n");                    //avtat = average turn around time
+    for(i=0;i<n;i++)
+    {
+        printf("P[%d]:",i+1);
+        scanf("%d",&bt[i]);
     }
-
-    // Calculate turnaround time for each person
-    for(int i = 0; i < n; i++) {
-        turnaround_time[i] = booking_time[i] + waiting_time[i];
-        total_turnaround_time += turnaround_time[i];
+    
+    printf("\nEnter the Arrival Time\n");
+    for(i=0;i<n;i++){
+        printf("P[%d]:",i+1);
+        scanf("%d",at+i);
     }
-
-    // Display Gantt chart
-    printf("\nGantt Chart:\n");
-    printf("-----------\n");
-    printf("| ");
-    for(int i = 0; i < n; i++) {
-        printf(" P%d |", i+1);
+    //bubble sort for arrival time ordering
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<n-i-1;j++){
+            if(at[i] > at[j]){
+                int temp = at[i];
+                at[i] = at[j];
+                at[j] = temp;
+            }
+        }
     }
-    printf("\n-----------\n");
-    printf("0\t");
-    for(int i = 0; i < n; i++) {
-        printf("\t%d", turnaround_time[i]);
+    
+    wt[0]=0;   
+ 
+    for(i=1;i<n;i++)
+    {
+        wt[i]=0;
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+            wt[i] = wt[i] - at[i];
     }
-    printf("\n\n");
-
-    // Display waiting time and turnaround time for each person
-    printf("Waiting Time:\n");
-    for(int i = 0; i < n; i++) {
-        printf("P%d: %d\n", i+1, waiting_time[i]);
+ 
+    printf("\nProcess\t\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time");
+ 
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];
+        avwt+=wt[i];
+        avtat+=tat[i];
+        printf("\nP[%d]\t\t%d\t\t%d\t\t%d\t\t%d",i+1,at[i],bt[i],wt[i],tat[i]);
     }
-
-    printf("\nTurnaround Time:\n");
-    for(int i = 0; i < n; i++) {
-        printf("P%d: %d\n", i+1, turnaround_time[i]);
+ 
+    avwt=avwt/n;
+    avtat = avtat/n;
+    printf("\nAverage Waiting Time:%.2lf",avwt);
+    printf("\nAverage Turnaround Time:%.2lf",avtat);
+    printf("\n\nGhart Chart:\n");
+    printf("__________________________________________");
+    printf("\n");
+    printf("|");
+    
+    for(int i=0;i<n;i++){
+        printf("| P[%d] |",i+1);
     }
-
-    // Calculate and display average turnaround time
-    float avg_turnaround_time = (float)total_turnaround_time / n;
-    printf("\nAverage Turnaround Time: %.2f\n", avg_turnaround_time);
-}
-
-int main() {
-    int n;
-    printf("Enter the number of people in the queue: ");
-    scanf("%d", &n);
-
-    int arrival_time[n], booking_time[n];
-    printf("Enter arrival and booking times for each person:\n");
-    for(int i = 0; i < n; i++) {
-        printf("Arrival time for P%d: ", i+1);
-        scanf("%d", &arrival_time[i]);
-        printf("Booking time for P%d: ", i+1);
-        scanf("%d", &booking_time[i]);
-    }
-
-    fcfs(arrival_time, n, booking_time);
-
+    printf("|");
+    printf("\n");
+    printf("__________________________________________");
+    printf("\n");
     return 0;
 }
