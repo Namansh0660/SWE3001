@@ -93,3 +93,70 @@ int main() {
 
     return 0;
 }
+
+
+
+
+#include <stdio.h>
+
+#define NumLanes 4
+#define QuantumTime 3
+#define VehiclesPerMinute 10
+
+void simulateTrafficSignal(int lanes[], int n, int quantum) {
+    int time = 0, totalVehicles = 0;
+    int wait[n], turnaround[n];
+
+    for (int i = 0; i < n; i++) {
+        wait[i] = 0;
+        turnaround[i] = 0;
+        totalVehicles += lanes[i];
+    }
+
+    printf("Gantt Chart:\n");
+
+    while (totalVehicles > 0) {
+        int laneIndex = time % n;
+
+        if (lanes[laneIndex] > 0) {
+            int vehiclesCrossed = (lanes[laneIndex] >= VehiclesPerMinute * quantum) ? VehiclesPerMinute * quantum : lanes[laneIndex];
+            lanes[laneIndex] -= vehiclesCrossed;
+            totalVehicles -= vehiclesCrossed;
+
+            wait[laneIndex] += time;
+            turnaround[laneIndex] = wait[laneIndex] + vehiclesCrossed;
+            
+            printf("Lane %d: %d - %d\n", laneIndex + 1, time, time + quantum);
+        }
+
+        time += quantum;
+    }
+
+    printf("\nLane\tWaiting Time\tTurnaround Time\n");
+    float avgWait = 0, avgTurnaround = 0;
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%d\t\t%d\n", i + 1, wait[i], turnaround[i]);
+        avgWait += wait[i];
+        avgTurnaround += turnaround[i];
+    }
+
+    avgWait /= n;
+    avgTurnaround /= n;
+
+    printf("\nAverage Waiting Time: %.2f minutes\n", avgWait);
+    printf("Average Turnaround Time: %.2f minutes\n", avgTurnaround);
+}
+
+int main() {
+    int lanes[NumLanes];
+    printf("Enter the number of vehicles in each lane:\n");
+    for (int i = 0; i < NumLanes; i++) {
+        printf("Lane %d: ", i + 1);
+        scanf("%d", &lanes[i]);
+    }
+
+    printf("\nSimulation Results:\n");
+    simulateTrafficSignal(lanes, NumLanes, QuantumTime);
+
+    return 0;
+}
