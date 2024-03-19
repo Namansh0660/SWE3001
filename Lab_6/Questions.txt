@@ -1,0 +1,20 @@
+1. Consider scenario where two friends x and y are having a joint saving accounts in a bank , name the function for the account as balance.
+   The two operations that can be performed on the account is withdraw and deposit a parameter called amount is shared by both x and y by which 
+   they will specify the amount to be deposited or withdrawn, assume that at time t0 for the person x's is depositing 1000 to the account and person y 
+   is withdrawing Rs.500 from the account at the same time. WAP in C to implement the solution to avoid inconsistency of the amount in the account and also 
+   achieve mutual exclusion between them. ("peterson solution")
+
+
+
+2. Conside that a group of 4 students are doing a project work and they are storing the information of their individual work in a common file 
+   which is accessible by all the purpose of the file as a common one is to make the students to kno w each other work the condition for accessing 
+   the file is as follows:
+
+   a. All the students can read the file simultaneously but no students is allowed to make updation at the same time 
+   b. If one students is updating a file no other students should read or update the file
+
+   WAP in C to achive mutual exclusion by satfying the above conditon using semaphore. ("reader-writer")
+
+
+
+3. WAP in C to implement the solution for dining philospher problem using monito
