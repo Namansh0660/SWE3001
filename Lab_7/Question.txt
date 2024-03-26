@@ -18,6 +18,6 @@ The inital allocation and maximum requirement of each student is given below :
 
     S0      1   1   2       5   4   4
     S1      2   1   2       4   3   3
-    S2      3   0   1       4   1   3
+    S2      3   0   1       9   1   3
     S3      0   2   0       8   6   4
     S4      1   1   2       2   2   3
