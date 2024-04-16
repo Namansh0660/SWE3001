@@ -39,6 +39,74 @@ void implimentBestFit(int blockSize[], int blocks, int processSize[], int procce
             printf("Not Allocated\n");
     }
 }
+void implementFirstFit(int blockSize[], int blocks, int processSize[], int processes) {
+    int allocation[processes];
+    int occupied[blocks];
+
+    for(int i = 0; i < processes; i++) {
+        allocation[i] = -1;
+    }
+
+    for(int i = 0; i < blocks; i++) {
+        occupied[i] = 0;
+    }
+
+    for (int i = 0; i < processes; i++) {
+        for (int j = 0; j < blocks; j++) {
+            if (blockSize[j] >= processSize[i] && !occupied[j]) {
+                allocation[i] = j;
+                occupied[j] = 1;
+                break; // Allocation successful, move to next process
+            }
+        }
+    }
+
+    printf("\nProcess No.\tProcess Size\tBlock no.\n");
+    for (int i = 0; i < processes; i++) {
+        printf("%d \t\t\t %d \t\t\t", i+1, processSize[i]);
+        if (allocation[i] != -1)
+            printf("%d\n", allocation[i] + 1);
+        else
+            printf("Not Allocated\n");
+    }
+}
+
+void implementWorstFit(int blockSize[], int blocks, int processSize[], int processes) {
+    int allocation[processes];
+    int occupied[blocks];
+
+    for(int i = 0; i < processes; i++) {
+        allocation[i] = -1;
+    }
+
+    for(int i = 0; i < blocks; i++) {
+        occupied[i] = 0;
+    }
+
+    for (int i = 0; i < processes; i++) {
+        int worstFitIndex = -1;
+        for (int j = 0; j < blocks; j++) {
+            if (blockSize[j] >= processSize[i] && !occupied[j]) {
+                if (worstFitIndex == -1 || blockSize[j] > blockSize[worstFitIndex]) {
+                    worstFitIndex = j;
+                }
+            }
+        }
+        if (worstFitIndex != -1) {
+            allocation[i] = worstFitIndex;
+            occupied[worstFitIndex] = 1;
+        }
+    }
+
+    printf("\nProcess No.\tProcess Size\tBlock no.\n");
+    for (int i = 0; i < processes; i++) {
+        printf("%d \t\t\t %d \t\t\t", i+1, processSize[i]);
+        if (allocation[i] != -1)
+            printf("%d\n", allocation[i] + 1);
+        else
+            printf("Not Allocated\n");
+    }
+}
 
 int main()
 {
@@ -50,3 +118,4 @@ int main()
     implimentBestFit(blockSize, blocks, processSize, proccesses);
     return 0 ;
 }
+
