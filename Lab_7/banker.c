@@ -1,65 +1,95 @@
-#include<stdio.h>
-#include<stdbool.h>
+#include <stdio.h>  
+int main()  
+{  
+    // P0, P1, P2, P3, P4 are the Process names here  
+  
+    int n, m, i, j, k;  
+    n = 5;                         // Number of processes  
+    m = 3;                         // Number of resources  
+    int alloc[5][3] = {{1, 1, 2},  // P0 // Allocation Matrix  
+                       {2, 1, 2},  // P1  
+                       {3, 0, 1},  // P2  
+                       {0, 2, 0},  // P3  
+                       {1, 1, 2}}; // P4  
+  
+    int max[5][3] = {{5, 4, 4},  // P0 // MAX Matrix  
+                     {4, 3, 3},  // P1  
+                     {9, 1, 3},  // P2  
+                     {8, 6, 4},  // P3  
+                     {2, 2, 3}}; // P4  
+  
+    int avail[3] = {3,2,1}; // Available Resources  
 
-int main() {
-    // Initial allocation and maximum requirement of each student
-    int allocation[5][3] = {{1, 1, 2}, {2, 1, 2}, {3, 0, 1}, {0, 2, 0}, {1, 1, 2}};
-    int max[5][3] = {{5, 4, 4}, {4, 3, 3}, {9, 1, 3}, {8, 6, 4}, {2, 2, 3}};
-    int available[3] = {10, 7, 8}; // Available quantities of components A, B, C
-
-    int need[5][3]; // Need matrix
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 3; j++) {
-            need[i][j] = max[i][j] - allocation[i][j];
-        }
-    }
-
-    bool finish[5] = {false}; // To track if a student is finished or not
-    int safeSeq[5], work[3], count = 0;
-
-    // Copy the available vector to the work vector
-    for(int i = 0; i < 3; i++) {
-        work[i] = available[i];
-    }
-
-    while(count < 5) {
-        bool found = false;
-        for(int i = 0; i < 5; i++) {
-            if(!finish[i]) {
-                int j;
-                for(j = 0; j < 3; j++) {
-                    if(need[i][j] > work[j])
-                        break;
-                }
-                if(j == 3) {
-                    for(int k = 0; k < 3; k++) {
-                        work[k] += allocation[i][k];
-                    }
-                    safeSeq[count++] = i;
-                    finish[i] = true;
-                    found = true;
-                }
-            }
-        }
-        if(!found) {
-            printf("System is not in a safe state.\n");
-            return -1;
-        }
-    }
-
-    printf("1. Need Matrix:\n");
-    for(int i = 0; i < 5; i++) {
-        printf("S%d: %d %d %d\n", i, need[i][0], need[i][1], need[i][2]);
-    }
-
-    printf("\n2. Available Vector:\n");
-    printf("%d %d %d\n", work[0], work[1], work[2]);
-
-    printf("\n3. Safe Sequence:\n");
-    for(int i = 0; i < 5; i++) {
-        printf("S%d ", safeSeq[i]);
+    
+    printf("2) Available vector\n");
+    for(int i=0;i<3;i++){
+        printf("%d ",avail[i]);
     }
     printf("\n");
-
-    return 0;
-}
+    
+  
+    int f[n], ans[n], ind = 0;  
+    for (k = 0; k < n; k++)  
+    {  
+        f[k] = 0;  
+    }  
+    int need[n][m];  
+    for (i = 0; i < n; i++)  
+    {  
+        for (j = 0; j < m; j++)  
+            need[i][j] = max[i][j] - alloc[i][j];  
+    }  
+    int y = 0;  
+    for (k = 0; k < 5; k++)  
+    {  
+        for (i = 0; i < n; i++)  
+        {  
+            if (f[i] == 0)  
+            {  
+                int flag = 0;  
+                for (j = 0; j < m; j++)  
+                {  
+                    if (need[i][j] > avail[j])  
+                    {  
+                        flag = 1;  
+                        break;  
+                    }  
+                }  
+                if (flag == 0)  
+                {  
+                    ans[ind++] = i;  
+                    for (y = 0; y < m; y++)  
+                        avail[y] += alloc[i][y];  
+                    f[i] = 1;  
+                }  
+            }  
+        }  
+    }  
+        printf("1) Need Matrix : \n");
+    for(int i=0;i<5;i++){
+        for(int j=0;j<3;j++){
+            printf("%d ",need[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    
+    int flag = 1;  
+    for (int i = 0; i < n; i++)  
+    {  
+        if (f[i] == 0)  
+        {  
+            flag = 0;  
+            printf("The following system is not safe");  
+            break;  
+        }  
+    }  
+    if (flag == 1)  
+    {  
+        printf("Following is the SAFE Sequence\n");  
+        for (i = 0; i < n - 1; i++)  
+            printf(" P%d ->", ans[i]);  
+        printf(" P%d", ans[n - 1]);  
+    }  
+    return (0);  
+}  
