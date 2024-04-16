@@ -1,109 +1,52 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-struct Process {
-    int pid;
-    int size;
-};
-
-struct Partition {
-    int id;
-    int size;
-    int allocated;
-};
-
-void bestFit(struct Process processes[], int numProcesses, struct Partition partitions[], int numPartitions) {
-    for (int i = 0; i < numProcesses; i++) {
-        int bestFitIndex = -1;
-        for (int j = 0; j < numPartitions; j++) {
-            if (partitions[j].allocated == 0 && partitions[j].size >= processes[i].size) {
-                if (bestFitIndex == -1 || partitions[j].size < partitions[bestFitIndex].size) {
-                    bestFitIndex = j;
-                }
+void implimentBestFit(int blockSize[], int blocks, int processSize[], int proccesses)
+{
+    int allocation[proccesses];
+    int occupied[blocks];
+    for(int i = 0; i < proccesses; i++){
+        allocation[i] = -1;
+    }
+    for(int i = 0; i < blocks; i++){
+        occupied[i] = 0;
+    }
+    for (int i = 0; i < proccesses; i++)
+    {
+        
+        int indexPlaced = -1;
+        for (int j = 0; j < blocks; j++) { 
+            if (blockSize[j] >= processSize[i] && !occupied[j])
+            {
+                if (indexPlaced == -1)
+                    indexPlaced = j;
+                else if (blockSize[j] < blockSize[indexPlaced])
+                    indexPlaced = j;
             }
         }
-        if (bestFitIndex != -1) {
-            partitions[bestFitIndex].allocated = 1;
-            printf("Process %d of size %dKB allocated to Partition %d of size %dKB\n",
-                processes[i].pid, processes[i].size, partitions[bestFitIndex].id, partitions[bestFitIndex].size);
-        } else {
-            printf("Process %d of size %dKB cannot be allocated\n", processes[i].pid, processes[i].size);
+        if (indexPlaced != -1)
+        {
+            allocation[i] = indexPlaced;
+            occupied[indexPlaced] = 1;
         }
+    }
+    printf("\nProcess No.\tProcess Size\tBlock no.\n");
+    for (int i = 0; i < proccesses; i++)
+    {
+        printf("%d \t\t\t %d \t\t\t", i+1, processSize[i]);
+        if (allocation[i] != -1)
+            printf("%d\n",allocation[i] + 1);
+        else
+            printf("Not Allocated\n");
     }
 }
 
-void worstFit(struct Process processes[], int numProcesses, struct Partition partitions[], int numPartitions) {
-    for (int i = 0; i < numProcesses; i++) {
-        int worstFitIndex = -1;
-        for (int j = 0; j < numPartitions; j++) {
-            if (partitions[j].allocated == 0 && partitions[j].size >= processes[i].size) {
-                if (worstFitIndex == -1 || partitions[j].size > partitions[worstFitIndex].size) {
-                    worstFitIndex = j;
-                }
-            }
-        }
-        if (worstFitIndex != -1) {
-            partitions[worstFitIndex].allocated = 1;
-            printf("Process %d of size %dKB allocated to Partition %d of size %dKB\n",
-                processes[i].pid, processes[i].size, partitions[worstFitIndex].id, partitions[worstFitIndex].size);
-        } else {
-            printf("Process %d of size %dKB cannot be allocated\n", processes[i].pid, processes[i].size);
-        }
-    }
-}
-
-void firstFit(struct Process processes[], int numProcesses, struct Partition partitions[], int numPartitions) {
-    for (int i = 0; i < numProcesses; i++) {
-        for (int j = 0; j < numPartitions; j++) {
-            if (partitions[j].allocated == 0 && partitions[j].size >= processes[i].size) {
-                partitions[j].allocated = 1;
-                printf("Process %d of size %dKB allocated to Partition %d of size %dKB\n",
-                    processes[i].pid, processes[i].size, partitions[j].id, partitions[j].size);
-                break; // Allocation successful, move to next process
-            }
-        }
-    }
-}
-
-int main() {
-    struct Partition partitions[] = {
-        {1, 20, 0},
-        {2, 100, 0},
-        {3, 40, 0},
-        {4, 200, 0},
-        {5, 10, 0}
-    };
-    struct Process processes[] = {
-        {1, 90},
-        {2, 50},
-        {3, 30},
-        {4, 40}
-    };
-    int numPartitions = sizeof(partitions) / sizeof(partitions[0]);
-    int numProcesses = sizeof(processes) / sizeof(processes[0]);
-
-    int choice;
-    printf("Choose the memory allocation algorithm:\n");
-    printf("1. Best Fit\n2. Worst Fit\n3. First Fit\n");
-    scanf("%d", &choice);
-
-    switch (choice) {
-        case 1:
-            printf("Memory Allocation using Best Fit Algorithm:\n");
-            bestFit(processes, numProcesses, partitions, numPartitions);
-            break;
-        case 2:
-            printf("Memory Allocation using Worst Fit Algorithm:\n");
-            worstFit(processes, numProcesses, partitions, numPartitions);
-            break;
-        case 3:
-            printf("Memory Allocation using First Fit Algorithm:\n");
-            firstFit(processes, numProcesses, partitions, numPartitions);
-            break;
-        default:
-            printf("Invalid choice.\n");
-            break;
-    }
-
-    return 0;
+int main()
+{
+    int blockSize[] = {20,100,40,200,10};
+    int processSize[] = {90,50,30,40};
+    int blocks = sizeof(blockSize)/sizeof(blockSize[0]);
+    int proccesses = sizeof(processSize)/sizeof(processSize[0]);
+ 
+    implimentBestFit(blockSize, blocks, processSize, proccesses);
+    return 0 ;
 }
