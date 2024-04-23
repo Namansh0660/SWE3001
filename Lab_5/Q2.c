@@ -113,3 +113,131 @@ int main() {
 
     return 0;
 }
+
+
+
+
+/*
+#include <stdio.h>
+
+typedef struct {
+    int customer_id;
+    int distance;
+} Customer;
+
+void nearestCustomerFirst(Customer customers[], int n) {
+    printf("Nearest Customer First Algorithm:\n");
+    printf("---------------------------------------------------------\n");
+    printf("| Customer ID | Distance from Delivery Point | Delivery Order |\n");
+    printf("---------------------------------------------------------\n");
+
+    int delivery_order[n];
+    int visited[n];
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+
+    int current_distance = 0;
+    for (int i = 0; i < n; i++) {
+        int min_distance = 999999; // Initialize to a large value
+        int nearest_customer = -1;
+        for (int j = 0; j < n; j++) {
+            if (!visited[j] && customers[j].distance < min_distance) {
+                min_distance = customers[j].distance;
+                nearest_customer = j;
+            }
+        }
+        visited[nearest_customer] = 1;
+        delivery_order[i] = nearest_customer;
+        current_distance += min_distance;
+
+        printf("|     %2d      |            %3d             |       %2d       |\n",
+               customers[nearest_customer].customer_id, min_distance, i + 1);
+    }
+
+    printf("---------------------------------------------------------\n");
+    printf("Total Distance Covered: %d units\n", current_distance);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of customers: ");
+    scanf("%d", &n);
+
+    Customer customers[n];
+    printf("Enter customer ID and distance from delivery point:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Customer %d: ", i + 1);
+        scanf("%d %d", &customers[i].customer_id, &customers[i].distance);
+    }
+
+    nearestCustomerFirst(customers, n);
+
+    return 0;
+}
+
+
+
+/*
+#include <stdio.h>
+
+typedef struct {
+    int customer_id;
+    int distance;
+    int frequency;
+} Customer;
+
+void frequentCustomerPriority(Customer customers[], int n) {
+    printf("\nFrequent Customer Priority Algorithm:\n");
+    printf("---------------------------------------------------------\n");
+    printf("| Customer ID | Distance from Delivery Point | Priority |\n");
+    printf("---------------------------------------------------------\n");
+
+    int delivery_order[n];
+    int visited[n];
+    for (int i = 0; i < n; i++) {
+        visited[i] = 0;
+    }
+
+    int current_distance = 0;
+    for (int i = 0; i < n; i++) {
+        int max_priority = -1;
+        int priority_customer = -1;
+        for (int j = 0; j < n; j++) {
+            if (!visited[j] && customers[j].frequency > max_priority) {
+                max_priority = customers[j].frequency;
+                priority_customer = j;
+            }
+        }
+        visited[priority_customer] = 1;
+        delivery_order[i] = priority_customer;
+        current_distance += customers[priority_customer].distance;
+
+        printf("|     %2d      |            %3d             |    %2d    |\n",
+               customers[priority_customer].customer_id, customers[priority_customer].distance,
+               customers[priority_customer].frequency);
+    }
+
+    printf("---------------------------------------------------------\n");
+    printf("Total Distance Covered: %d units\n", current_distance);
+}
+
+int main() {
+    int n;
+    printf("Enter the number of customers: ");
+    scanf("%d", &n);
+
+    Customer customers[n];
+    printf("Enter customer ID, distance from delivery point, and frequency of purchase:\n");
+    for (int i = 0; i < n; i++) {
+        printf("Customer %d: ", i + 1);
+        scanf("%d %d %d", &customers[i].customer_id, &customers[i].distance, &customers[i].frequency);
+    }
+
+    frequentCustomerPriority(customers, n);
+
+    return 0;
+}
+
+*/
+*/
